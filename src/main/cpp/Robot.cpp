@@ -3,12 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-
+#include "frc/DataLogManager.h"
+#include "frc/DriverStation.h"
 #include <frc2/command/CommandScheduler.h>
 
-Robot::Robot() {}
+Robot::Robot()
+{
+  frc::DataLogManager::Start();
+  frc::DriverStation::StartDataLog(frc::DataLogManager::GetLog());
+}
 
-void Robot::RobotPeriodic() {
+void Robot::RobotPeriodic()
+{
   frc2::CommandScheduler::GetInstance().Run();
 }
 
@@ -18,11 +24,13 @@ void Robot::DisabledPeriodic() {}
 
 void Robot::DisabledExit() {}
 
-void Robot::AutonomousInit() {
-  m_autonomousCommand = m_container.GetAutonomousCommand();
+void Robot::AutonomousInit()
+{
+  autonomousCommand = container.GetAutonomousCommand();
 
-  if (m_autonomousCommand) {
-    frc2::CommandScheduler::GetInstance().Schedule(m_autonomousCommand.value());
+  if (autonomousCommand)
+  {
+    frc2::CommandScheduler::GetInstance().Schedule(autonomousCommand.value());
   }
 }
 
@@ -30,9 +38,11 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::AutonomousExit() {}
 
-void Robot::TeleopInit() {
-  if (m_autonomousCommand) {
-    m_autonomousCommand->Cancel();
+void Robot::TeleopInit()
+{
+  if (autonomousCommand)
+  {
+    autonomousCommand->Cancel();
   }
 }
 
@@ -40,7 +50,8 @@ void Robot::TeleopPeriodic() {}
 
 void Robot::TeleopExit() {}
 
-void Robot::TestInit() {
+void Robot::TestInit()
+{
   frc2::CommandScheduler::GetInstance().CancelAll();
 }
 
@@ -49,7 +60,8 @@ void Robot::TestPeriodic() {}
 void Robot::TestExit() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() {
+int main()
+{
   return frc::StartRobot<Robot>();
 }
 #endif
