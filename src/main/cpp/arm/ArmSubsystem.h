@@ -31,6 +31,7 @@ class ArmSubsystem : AbstractSubsystem {
         TOP_POSITION,
         ZEROING
     };
+    void SetState(ArmState);
 
    private:
     ArmState currentState = ArmState::ZEROING;

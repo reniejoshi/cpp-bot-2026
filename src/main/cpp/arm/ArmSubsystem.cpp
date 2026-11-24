@@ -9,8 +9,11 @@
 
 #include <ctre/phoenix6/TalonFX.hpp>
 
+#include "ArmConstants.h"
 #include "RobotMap.h"
 #include "frc/DataLogManager.h"
+
+using degree_t = units::angle::degree_t;
 
 ArmSubsystem::ArmSubsystem() : AbstractSubsystem("Arm") {}
 
@@ -29,4 +32,19 @@ void ArmSubsystem::Periodic() {
 
 units::current::ampere_t ArmSubsystem::getTotalCurrent() {
     return frontArmCurrentSignal.GetValue() + backArmCurrentSignal.GetValue();
+}
+
+void ArmSubsystem::SetState(ArmState newState) {
+    currentState = newState;
+    degree_t targetAngle = [&]() -> degree_t {
+        switch (currentState) {
+            case ArmState::TOP_POSITION:
+                return ArmConstants::TOP_POSITION;
+            case ArmState::MIDDLE_POSITION:
+                return ArmConstants::MIDDLE_POSITION;
+            case ArmState::BOTTOM_POSITION:
+                return ArmConstants::BOTTOM_POSITION;
+        }
+    }();
+    frontArmMotor.SetControl(positionRequest.WithPosition(targetAngle));
 }
