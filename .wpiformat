@@ -1,0 +1,4 @@
+cppHeaderFileInclude { \.h$ }
+cppSrcFileInclude { \.cpp$ }
+modifiableFileExclude { ^\.gradle/ ^\.wpilib/ ^build/ ^gradle/ ^vendordeps/ }
+includeGuardRoots { src/main/include/ src/test/include/ }

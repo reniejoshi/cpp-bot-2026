@@ -1,21 +1,21 @@
-// Copyright (c) FIRST and other WPILib contributors.
+// Copyright (c) 2026 FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-#include "frc/DataLogManager.h"
-#include "frc/DriverStation.h"
+
 #include <frc2/command/CommandScheduler.h>
 
-Robot::Robot()
-{
-  frc::DataLogManager::Start();
-  frc::DriverStation::StartDataLog(frc::DataLogManager::GetLog());
+#include "frc/DataLogManager.h"
+#include "frc/DriverStation.h"
+
+Robot::Robot() {
+    frc::DataLogManager::Start();
+    frc::DriverStation::StartDataLog(frc::DataLogManager::GetLog());
 }
 
-void Robot::RobotPeriodic()
-{
-  frc2::CommandScheduler::GetInstance().Run();
+void Robot::RobotPeriodic() {
+    frc2::CommandScheduler::GetInstance().Run();
 }
 
 void Robot::DisabledInit() {}
@@ -24,35 +24,30 @@ void Robot::DisabledPeriodic() {}
 
 void Robot::DisabledExit() {}
 
-void Robot::AutonomousInit()
-{
-  autonomousCommand = container.GetAutonomousCommand();
+void Robot::AutonomousInit() {
+    autonomousCommand = container.GetAutonomousCommand();
 
-  if (autonomousCommand)
-  {
-    frc2::CommandScheduler::GetInstance().Schedule(autonomousCommand.value());
-  }
+    if (autonomousCommand) {
+        frc2::CommandScheduler::GetInstance().Schedule(autonomousCommand.value());
+    }
 }
 
 void Robot::AutonomousPeriodic() {}
 
 void Robot::AutonomousExit() {}
 
-void Robot::TeleopInit()
-{
-  if (autonomousCommand)
-  {
-    autonomousCommand->Cancel();
-  }
+void Robot::TeleopInit() {
+    if (autonomousCommand) {
+        autonomousCommand->Cancel();
+    }
 }
 
 void Robot::TeleopPeriodic() {}
 
 void Robot::TeleopExit() {}
 
-void Robot::TestInit()
-{
-  frc2::CommandScheduler::GetInstance().CancelAll();
+void Robot::TestInit() {
+    frc2::CommandScheduler::GetInstance().CancelAll();
 }
 
 void Robot::TestPeriodic() {}
@@ -60,8 +55,7 @@ void Robot::TestPeriodic() {}
 void Robot::TestExit() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main()
-{
-  return frc::StartRobot<Robot>();
+int main() {
+    return frc::StartRobot<Robot>();
 }
 #endif
