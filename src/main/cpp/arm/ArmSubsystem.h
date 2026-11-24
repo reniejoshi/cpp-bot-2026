@@ -20,7 +20,7 @@ using volt_t = units::voltage::volt_t;
 using DataLog = wpi::log::DataLog;
 using DoubleLogEntry = wpi::log::DoubleLogEntry;
 
-class ArmSubsystem : AbstractSubsystem {
+class ArmSubsystem : public AbstractSubsystem {
    public:
     ArmSubsystem();
     void Periodic() override;
