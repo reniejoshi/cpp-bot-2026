@@ -6,12 +6,15 @@
 
 #include <frc2/command/CommandPtr.h>
 
+#include "../cpp/arm/Arm.h"
+
 class RobotContainer {
- public:
-  RobotContainer();
+   public:
+    RobotContainer();
+    Arm arm;
 
-  frc2::CommandPtr GetAutonomousCommand();
+    frc2::CommandPtr GetAutonomousCommand();
 
- private:
-  void ConfigureBindings();
+   private:
+    void ConfigureBindings();
 };

@@ -44,6 +44,8 @@ void ArmSubsystem::SetState(ArmState newState) {
                 return ArmConstants::MIDDLE_POSITION;
             case ArmState::BOTTOM_POSITION:
                 return ArmConstants::BOTTOM_POSITION;
+            default:
+                return 0_deg;
         }
     }();
     frontArmMotor.SetControl(positionRequest.WithPosition(targetAngle));
