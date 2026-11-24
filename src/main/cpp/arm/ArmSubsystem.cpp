@@ -12,8 +12,21 @@
 #include "RobotMap.h"
 #include "frc/DataLogManager.h"
 
-ArmSubsystem::ArmSubsystem() {}
+ArmSubsystem::ArmSubsystem() : AbstractSubsystem("Arm") {}
 
 void ArmSubsystem::Periodic() {
-    // Refresh and log status signals
+    ctre::phoenix6::BaseStatusSignal::RefreshAll(frontArmPositionSignal, backArmPositionSignal, frontArmVelocitySignal, backArmVelocitySignal, frontArmCurrentSignal, backArmCurrentSignal, frontArmVoltageSignal, backArmVoltageSignal);
+
+    frontArmPositionEntry.Append(units::angle::degree_t{frontArmPositionSignal.GetValue()}.value());
+    backArmPositionEntry.Append(units::angle::degree_t{backArmPositionSignal.GetValue()}.value());
+    frontArmVelocityEntry.Append(frontArmVelocitySignal.GetValue().value());
+    backArmVelocityEntry.Append(backArmVelocitySignal.GetValue().value());
+    frontArmCurrentEntry.Append(frontArmCurrentSignal.GetValue().value());
+    backArmCurrentEntry.Append(backArmCurrentSignal.GetValue().value());
+    frontArmVoltageEntry.Append(frontArmVoltageSignal.GetValue().value());
+    backArmVoltageEntry.Append(backArmVoltageSignal.GetValue().value());
+}
+
+units::current::ampere_t ArmSubsystem::getTotalCurrent() {
+    return frontArmCurrentSignal.GetValue() + backArmCurrentSignal.GetValue();
 }
