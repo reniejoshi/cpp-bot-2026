@@ -10,7 +10,7 @@
 
 class RobotContainer {
    public:
-    RobotContainer();
+    RobotContainer() = default;
     Arm arm;
 
     frc2::CommandPtr GetAutonomousCommand();
